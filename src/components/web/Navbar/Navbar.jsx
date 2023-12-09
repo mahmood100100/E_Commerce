@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { UserContext } from '../Context/User';
-import { CartContext } from '../Context/Cart';
+import { UserContext } from '../Context/User.jsx';
+import { CartContext } from '../Context/Cart.jsx';
 import './Navbar.css'
 export default function Navbar() {
 

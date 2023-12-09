@@ -7,7 +7,7 @@ import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { QueryClient, QueryClientProvider } from 'react-query'
 import './index.css'
-import { UserContextProvider } from "./components/web/context/User.jsx";
+import { UserContextProvider } from "./components/web/Context/User.jsx";
 const queyClient = new QueryClient();
 
 

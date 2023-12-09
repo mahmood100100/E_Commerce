@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { UserContext } from '../Context/User'
+import { UserContext } from '../Context/User.jsx'
 
 export default function Profile() {
 
