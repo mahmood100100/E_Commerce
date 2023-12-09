@@ -8,7 +8,7 @@ import HomeDashboard from '../components/dashboard/Home/Home.jsx';
 import CategoriesDashboard from '../components/dashboard/Categories_admin/Dashboard_Categories.jsx'
 import Cart from "../components/web/Cart/Cart.jsx";
 import Category_details from "../components/web/Categories/Category_details.jsx";
-import Product from "../components/web/Products/product.jsx";
+import Product from "../components/web/Products/Product.jsx";
 import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "../components/web/ProtectedRoutes/ProtectedRoute.jsx";
 import Profile from "../components/web/Profile/Profile.jsx";
