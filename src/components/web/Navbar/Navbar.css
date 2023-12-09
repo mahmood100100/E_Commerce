@@ -1,0 +1,10 @@
+.count{
+    width: 15px;
+    height: 15px;
+    top: 20%;
+    right:-15%;
+    font-size: x-small;
+}
+.nav-link{
+    font-size: large;
+}
