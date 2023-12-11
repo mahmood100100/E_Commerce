@@ -18,20 +18,29 @@ export function CartContextProvider({children}){
                 setCount(data.cart.products.length)
                 toast('product added successfully', {
                     position: "top -right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
                     });
              }
           
           return token
 
         }catch(e){
-            console.log(e)
+            toast(`product already exist`, {
+                position: "top -right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
         }
     }
 
@@ -66,6 +75,61 @@ export function CartContextProvider({children}){
         }
     }
 
+    const clearCartContext = async () => {
+        try{
+        const token = localStorage.getItem("user Token");
+        const {data} = await axios.patch(`${import.meta.env.VITE_API_URL}/cart/clear`,
+        '',
+        {headers :{Authorization:`Tariq__${token}`}}
+        )
+        setCount(0)
+        if(data.message == 'success'){
+            toast(`Cart is clear`, {
+                position: "top right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                });
+        }
+        }catch(e){
+            console.log(e);
+        }
+    }
+
+    const increaseQuantityCartContext = async (productId)=>{
+
+        try{
+
+            const token = localStorage.getItem("user Token");
+            const {data} = await axios.patch(`${import.meta.env.VITE_API_URL}/cart/incraseQuantity`,
+            {productId},
+            {headers:{Authorization:`Tariq__${token}`}})
+            return data
+
+        }catch(e){
+            console.log(e);
+        }
+    }
+
+    const decreaseQuantityCartContext = async (productId)=>{
+
+        try{
+
+            const token = localStorage.getItem("user Token");
+            const {data} = await axios.patch(`${import.meta.env.VITE_API_URL}/cart/decraseQuantity`,
+            {productId},
+            {headers:{Authorization:`Tariq__${token}`}})
+            return data
+
+        }catch(e){
+            console.log(e);
+        }
+    }
+
     useEffect(()=>{
         const token = localStorage.getItem("user Token");
         if(token){
@@ -73,7 +137,7 @@ export function CartContextProvider({children}){
         }
     },[count])
 
-    return <CartContext.Provider value={{AddToCartContext , getCartContext , removeCartContext , count}}>
+    return <CartContext.Provider value={{ AddToCartContext , getCartContext , removeCartContext , count , setCount , clearCartContext , increaseQuantityCartContext , decreaseQuantityCartContext }}>
 
         {children}
 

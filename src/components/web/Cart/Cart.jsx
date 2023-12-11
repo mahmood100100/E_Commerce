@@ -2,9 +2,10 @@ import React, { useContext } from 'react'
 import './Cart.css'
 import { CartContext } from '../Context/Cart.jsx'
 import { useQuery } from 'react-query';
+import { Link } from 'react-router-dom';
 function Cart() {
 
-    const {getCartContext , removeCartContext} = useContext(CartContext);
+    const {getCartContext , removeCartContext , clearCartContext , increaseQuantityCartContext , decreaseQuantityCartContext } = useContext(CartContext);
 
     const getCart = async ()=>{
         
@@ -19,6 +20,28 @@ function Cart() {
         return await removeCartContext(productId);
         
     }
+
+    const ClearCart = async ()=>{
+      return await clearCartContext();
+    }
+
+    const increaseQuantity = async (productId)=>{
+        
+      return await increaseQuantityCartContext(productId);
+      
+  }
+
+  const decreaseQuantity = async (productId)=>{
+        
+    return await decreaseQuantityCartContext(productId);
+    
+}
+
+const subTotal = (products) =>{
+  let subTotal = 0;
+  products.map((product) => subTotal += product.quantity * product.details.price)
+  return `$${subTotal}`;
+}
 
     if (isLoading){
         return <h2>Loading ...</h2>
@@ -43,7 +66,9 @@ function Cart() {
                   <h2>Subtotal</h2>
                 </div>
               </div>
-              {data?.products.length ? data.products.map((product)=>{
+              {data?.products.length ?(
+                <>
+                {data.products.map((product)=>{
 
                 return(
                     <div className="item" key={product.details._id}>
@@ -72,7 +97,7 @@ function Cart() {
                   </div>
                 </div>
                 <div className="quantity">
-                  <button>
+                  <button onClick={()=>decreaseQuantity(product.details._id)}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width={16}
@@ -90,7 +115,7 @@ function Cart() {
                     </svg>
                   </button>
                   <span>{product.quantity}</span>
-                  <button>
+                  <button onClick={()=>increaseQuantity(product.details._id)}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width={16}
@@ -112,7 +137,10 @@ function Cart() {
               </div>
                 )
 
-              }):<div className='d-flex justify-content-center align-items-center h-100'><h2>No products added to the cart</h2></div>}
+              })}
+              <button className=' btn btn-outline-danger border border-danger' onClick={ClearCart}>Clear Cart</button>
+              </>
+              ):(<div className='d-flex justify-content-center align-items-center h-100'><h2>No products added to the cart</h2></div>)}
             </div>
             <div className="cart-summary">
               <h2>Cart summary</h2>
@@ -137,14 +165,14 @@ function Cart() {
                 </div>
                 <div className="summary-footer">
                   <label>Subtotal</label>
-                  <span>$1234.00</span>
+                  <span>{data?.products.length? subTotal(data.products) :`$0`}</span>
                 </div>
                 <div className="summary-footer">
                   <label className="total">Total</label>
-                  <span>$1345.00</span>
+                  <span>{data?.products.length? subTotal(data.products) :`$0`}</span>
                 </div>
                 <div className="checkout">
-                  <a href="#">Chekout</a>
+                  <Link to={'/order'}  >Chekout</Link> 
                 </div>
               </div>
             </div>
