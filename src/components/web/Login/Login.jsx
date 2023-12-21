@@ -30,15 +30,15 @@ export default function Login() {
       localStorage.setItem("user Token", data.token);
       setUserToken(data.token);
       
-      toast('Login successfuly', {
-        position: "top-right",
-        autoClose: 5000,
+      toast('login successfuly', {
+        position: "top-left",
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "dark",
         });
         navigate("/")
         getCartContext()

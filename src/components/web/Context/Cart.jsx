@@ -7,6 +7,7 @@ export const CartContext = createContext(null)
 export function CartContextProvider({children}){
 
     const [count , setCount] = useState(0);
+    const [loading , isLoading] = useState(true);
 
     const AddToCartContext = async (productId)=>{
         try{
@@ -16,27 +17,27 @@ export function CartContextProvider({children}){
              {headers : {Authorization :`Tariq__${token}` }})
              if (data.message == 'success'){
                 setCount(data.cart.products.length)
-                toast('product added successfully', {
-                    position: "top -right",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
+                toast('product added successfuly', {
+                    position: "top-left",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
                     });
              }
           
           return token
 
         }catch(e){
-            toast(`product already exist`, {
-                position: "top -right",
+            toast('product already exist', {
+                position: "top-left",
                 autoClose: 2000,
                 hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: false,
+                closeOnClick: true,
+                pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
                 theme: "dark",
@@ -47,12 +48,13 @@ export function CartContextProvider({children}){
     const getCartContext = async ()=>{
 
         try{
+            isLoading(true)
             const token = localStorage.getItem("user Token");
             const {data} = await axios.get(`${import.meta.env.VITE_API_URL}/cart`,
             {headers:{Authorization:`Tariq__${token}`}})
             setCount(data.count)
+            isLoading(false);
             return data;
-
         }catch(e){
             
             console.log(e)
@@ -62,14 +64,14 @@ export function CartContextProvider({children}){
     const removeCartContext = async (productId)=>{
 
         try{
-
+            isLoading(true);
             const token = localStorage.getItem("user Token");
             const {data} = await axios.patch(`${import.meta.env.VITE_API_URL}/cart/removeItem`,
             {productId},
             {headers:{Authorization:`Tariq__${token}`}})
             setCount(data.cart.products.length)
+            isLoading(false);
             return data
-
         }catch(e){
             console.log(e);
         }
@@ -77,6 +79,7 @@ export function CartContextProvider({children}){
 
     const clearCartContext = async () => {
         try{
+        isLoading(true);
         const token = localStorage.getItem("user Token");
         const {data} = await axios.patch(`${import.meta.env.VITE_API_URL}/cart/clear`,
         '',
@@ -84,16 +87,17 @@ export function CartContextProvider({children}){
         )
         setCount(0)
         if(data.message == 'success'){
-            toast(`Cart is clear`, {
-                position: "top right",
+            toast('cart is clear', {
+                position: "top-left",
                 autoClose: 2000,
                 hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: false,
+                closeOnClick: true,
+                pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
                 theme: "dark",
                 });
+                isLoading(false);
         }
         }catch(e){
             console.log(e);
@@ -137,7 +141,7 @@ export function CartContextProvider({children}){
         }
     },[count])
 
-    return <CartContext.Provider value={{ AddToCartContext , getCartContext , removeCartContext , count , setCount , clearCartContext , increaseQuantityCartContext , decreaseQuantityCartContext }}>
+    return <CartContext.Provider value={{ AddToCartContext , getCartContext , removeCartContext , count , loading , setCount , clearCartContext , increaseQuantityCartContext , decreaseQuantityCartContext }}>
 
         {children}
 

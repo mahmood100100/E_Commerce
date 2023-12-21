@@ -18,6 +18,7 @@ import UserInfo from "../components/web/Profile/UserInfo.jsx";
 import Contact from "../components/web/Profile/Contact.jsx";
 import Order from "../components/web/Order/Order.jsx";
 import ProfileOrder from "../components/web/Profile/ProfileOrder.jsx";
+import Products from "../components/web/Products/Products.jsx";
 export const router = createBrowserRouter([
   {
     path:'/',
@@ -94,6 +95,10 @@ export const router = createBrowserRouter([
           element:
             <ResetPassowrd/>
 
+        },
+        {
+          path:'products',
+          element:<Products />
         },
         {
           path:'*',

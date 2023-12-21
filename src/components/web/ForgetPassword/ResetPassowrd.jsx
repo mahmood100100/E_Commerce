@@ -21,16 +21,16 @@ export default function resetPassword() {
         if(data.message === "success"){
 
             formik.resetForm();
-            toast('Password changed successfully', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                });
+            toast('password changed successfuly', {
+              position: "top-left",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              });
                 navigate("/login")
         }
       }

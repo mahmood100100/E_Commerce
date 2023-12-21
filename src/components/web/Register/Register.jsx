@@ -23,15 +23,15 @@ export default function Register() {
     const {data} = await axios.post(import.meta.env.VITE_API_URL+"/auth/signup",formData);
     if(data.message === "success"){
       formik.resetForm();
-     toast('account created successfuly , please verify your email to login', {
-        position: "top -right",
-        autoClose: 5000,
+      toast('Account created successfuly , please verify your email to login ', {
+        position: "top-left",
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "dark",
         });
     }
   }
